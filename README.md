@@ -9,10 +9,8 @@ Using go get
 go get github.com/pharosnet/gitcgen
 ```
 
-Using download bin
-* [Darwin](https://github.com/pharosnet/gitcgen/releases/download/v1.0.0/gitcgen_darwin_x64_v1.0.0.zip)
-* [Linux](https://github.com/pharosnet/gitcgen/releases/download/v1.0.0/gitcgen_linux_x64_v1.0.0.zip)
-* [Windows](https://github.com/pharosnet/gitcgen/releases/download/v1.0.0/gitcgen_win_x64_v1.0.0.zip)
+Using download
+* [Github Releases](https://github.com/pharosnet/gitcgen/releases)
 
 
 ## Usage
@@ -62,3 +60,6 @@ func main() {
 }
 ```
 
+## Advance
+
+Using it in CI / CD.
