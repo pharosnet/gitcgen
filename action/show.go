@@ -12,13 +12,13 @@ func Show(path string) (err error) {
 		return
 	}
 
-	id, cmtIdErr := getLatestCommitId(r, true)
+	id, tag, cmtIdErr := getLatestCommitId(r, true)
 	if cmtIdErr != nil {
 		err = cmtIdErr
 		return
 	}
 
-	fmt.Println(id)
+	fmt.Println("id:", id, "tag:", tag)
 
 	return
 }

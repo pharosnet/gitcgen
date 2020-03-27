@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/go-git/go-git/v5"
 	"github.com/go-git/go-git/v5/plumbing"
+	"github.com/go-git/go-git/v5/plumbing/object"
 	"time"
 )
 
@@ -21,7 +22,7 @@ func getRepository(projectPath string) (r *git.Repository, err error) {
 	return
 }
 
-func getLatestCommitId(r *git.Repository, short bool) (id string, err error) {
+func getLatestCommit(r *git.Repository) (cmt *object.Commit, err error) {
 
 	since := time.Time{}
 	until := time.Now()
@@ -37,10 +38,22 @@ func getLatestCommitId(r *git.Repository, short bool) (id string, err error) {
 		return
 	}
 
-	cmt, cmtErr := commits.Next()
+	cmt0, cmtErr := commits.Next()
 	defer commits.Close()
 	if cmtErr != nil {
 		err = fmt.Errorf("git get latest commit failed, %v", cmtErr)
+		return
+	}
+	cmt = cmt0
+
+	return
+}
+
+func getLatestCommitId(r *git.Repository, short bool) (id string, tag string, err error) {
+
+	cmt, cmtErr := getLatestCommit(r)
+	if cmtErr != nil {
+		err = cmtErr
 		return
 	}
 
@@ -55,5 +68,21 @@ func getLatestCommitId(r *git.Repository, short bool) (id string, err error) {
 	}
 
 	id = id0
+
+	tag, _ = getTagOnCommitId(r, cmt)
+
+	return
+}
+
+func getTagOnCommitId(r *git.Repository, cmt *object.Commit) (name string, err error) {
+
+	tags, _ := r.Tags()
+	_ = tags.ForEach(func(reference *plumbing.Reference) error {
+		if reference.Hash().String() == cmt.Hash.String() {
+			name = reference.Name().Short()
+		}
+		return nil
+	})
+
 	return
 }

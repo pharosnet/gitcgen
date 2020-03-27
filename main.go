@@ -11,7 +11,7 @@ import (
 const (
 	workTreeFlag = "work_tree"
 	outputFlag   = "output"
-	shortFlag   = "short"
+	shortFlag    = "short"
 )
 
 var initShowFlags = []cli.Flag{
@@ -56,7 +56,7 @@ func main() {
 		{
 			Name:    "show",
 			Aliases: []string{"s"},
-			Usage:   "sshow latest git commit id",
+			Usage:   "show latest git commit id",
 			Action:  show,
 			Flags:   initShowFlags,
 		},
