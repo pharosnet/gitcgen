@@ -76,8 +76,15 @@ func getLatestCommitId(r *git.Repository, short bool) (id string, tag string, er
 
 func getTagOnCommitId(r *git.Repository, cmt *object.Commit) (name string, err error) {
 
-	tags, _ := r.Tags()
+	tags, tagsErr := r.Tags()
+	if tagsErr != nil {
+		err = tagsErr
+		return
+	}
 	_ = tags.ForEach(func(reference *plumbing.Reference) error {
+		if name != "" {
+			return nil
+		}
 		if reference.Hash().String() == cmt.Hash.String() {
 			name = reference.Name().Short()
 		}

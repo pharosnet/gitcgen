@@ -6,7 +6,7 @@ It is good to generate a go file in a go http server project, that the http serv
 ## Install
 Using go get
 ```go
-go get github.com/pharosnet/gitcgen
+go get github.com/pharosnet/gitcgen@v1.2.0
 ```
 
 Using download
