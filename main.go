@@ -50,7 +50,7 @@ var initGenFlags = []cli.Flag{
 
 func main() {
 	app := cli.NewApp()
-	app.Version = "v1.0.0"
+	app.Version = "v1.2.0"
 	app.Usage = "Automatically generate git commit id code file for Go."
 	app.Commands = []*cli.Command{
 		{
