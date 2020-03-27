@@ -4,9 +4,16 @@ generate a go file contains a git commit id.
 It is good to generate a go file in a go http server project, that the http server can publish a url to show it's version.
 
 ## Install
+Using go get
 ```go
 go get github.com/pharosnet/gitcgen
 ```
+
+Using download bin
+* [Darwin](https://github.com/pharosnet/gitcgen/releases/download/v1.0.0/gitcgen_darwin_x64_v1.0.0.zip)
+* [Linux](https://github.com/pharosnet/gitcgen/releases/download/v1.0.0/gitcgen_linux_x64_v1.0.0.zip)
+* [Windows](https://github.com/pharosnet/gitcgen/releases/download/v1.0.0/gitcgen_win_x64_v1.0.0.zip)
+
 
 ## Usage
 
