@@ -2,10 +2,13 @@ package main
 
 import (
 	"fmt"
-	"github.com/pharosnet/gitcgen/action"
-	"github.com/urfave/cli/v2"
 	"log"
 	"os"
+	"path"
+
+	"github.com/urfave/cli/v2"
+
+	"github.com/pharosnet/gitcgen/action"
 )
 
 const (
@@ -50,7 +53,7 @@ var initGenFlags = []cli.Flag{
 
 func main() {
 	app := cli.NewApp()
-	app.Version = "v1.2.0"
+	app.Version = "v1.2.1"
 	app.Usage = "Automatically generate git commit id code file for Go."
 	app.Commands = []*cli.Command{
 		{
@@ -78,12 +81,13 @@ func show(c *cli.Context) (err error) {
 
 	wtp := c.String(workTreeFlag)
 
-	if wtp == "" {
-		err = fmt.Errorf("%s's value is empty", workTreeFlag)
+	p, pErr := getWorkTree(wtp)
+	if pErr != nil {
+		err = pErr
 		return
 	}
 
-	err = action.Show(wtp)
+	err = action.Show(p)
 
 	return
 }
@@ -91,9 +95,9 @@ func show(c *cli.Context) (err error) {
 func generate(c *cli.Context) (err error) {
 
 	wtp := c.String(workTreeFlag)
-
-	if wtp == "" {
-		err = fmt.Errorf("%s's value is empty", workTreeFlag)
+	p, pErr := getWorkTree(wtp)
+	if pErr != nil {
+		err = pErr
 		return
 	}
 
@@ -106,7 +110,25 @@ func generate(c *cli.Context) (err error) {
 
 	short := c.Bool(shortFlag)
 
-	err = action.Generate(wtp, short, output)
+	err = action.Generate(p, short, output)
+
+	return
+}
+
+func getWorkTree(wtp string) (p string, err error) {
+	if wtp == "" {
+		err = fmt.Errorf("%s's value is empty", workTreeFlag)
+		return
+	}
+
+	wtp = path.Clean(wtp)
+
+	if _, err0 := os.Stat(wtp); os.IsNotExist(err0) {
+		err = fmt.Errorf("dir: %s is not exist", p)
+		return
+	}
+
+	 p = wtp
 
 	return
 }

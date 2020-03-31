@@ -80,7 +80,7 @@ func generateFile(id string, tag string, path0 string) (err error) {
 
 	content := b.Bytes()
 
-	wErr := ioutil.WriteFile(path0, content, 066)
+	wErr := ioutil.WriteFile(path0, content, 0666)
 
 	if wErr != nil {
 		err = fmt.Errorf("write go file failed, %v", wErr)
